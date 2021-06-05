@@ -19,8 +19,15 @@ def juego_crear():
         M.append(ROW)
     return M
 
+def hay_valor_en_coordenada(juego, x, y):
+     for i in range(filas):
+        for j in range(columnas):
+            if juego[i][j] == 1:
+                return True
+    return False
 
-def juego_actualizar(juego, x, y)
+
+def juego_actualizar(juego, x, y):
     """Actualizar el estado del juego
 
     x e y son las coordenadas (en pixels) donde el usuario hizo click.
@@ -28,16 +35,15 @@ def juego_actualizar(juego, x, y)
     del tablero; en ese caso determina el nuevo estado del juego y lo
     devuelve.
     """
-    if x in range(filas) 
-        and y in range(columnas)
-        and x, y == vacio:
+
+    if hay_valor_en_coordenada(juego, x, y) == False:
         new_juego = []
         for i in range (filas):
             row = []
             for j in range (columnas):
                 row.append(juego[i][j])
             new_juego.append(row) 
-        new_juego[x][y] = #el 'x' o el 'o'
+        new_juego[i][j] =  #el 'x' o el 'o'
         return new_juego 
     return juego
 
@@ -47,6 +53,7 @@ def juego_mostrar(juego):
     """Actualizar la ventana"""
     gamelib.draw_text('5 en línea', 150, 20)
     gamelib.draw_rectangle(1, 10)
+
 def main():
     juego = juego_crear()
 
