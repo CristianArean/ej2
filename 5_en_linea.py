@@ -20,6 +20,7 @@ def juego_crear():
     return M
 
 def hay_valor_en_coordenada(juego, x, y):
+    
      for i in range(filas):
         for j in range(columnas):
             if juego[i][j] !=0:
