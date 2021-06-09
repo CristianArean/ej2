@@ -65,9 +65,11 @@ def juego_actualizar(juego, x, y):
 def juego_mostrar(juego):
     """Actualizar la ventana"""
     gamelib.draw_text('5 en línea', 150, 20)
-    gamelib.draw_rectangle(10, 40, 290, 250, outline='white', fill='black')
-    gamelib.draw_line(10, 40, 10, 250)
-
+    gamelib.draw_rectangle(ANCHO_VENTANA - 260, ALTO_VENTANA - 260, ANCHO_VENTANA - 40, ALTO_VENTANA - 40, outline='white', width=2, fill=None)
+    for i in range(40, 280, 22):
+        gamelib.draw_line(ANCHO_VENTANA - 260, i, ANCHO_VENTANA - 42, i, fill='white', width=1)
+        for j in range(40, 280, 22):
+            gamelib.draw_line(j, ALTO_VENTANA - 260, j, ALTO_VENTANA - 42)
 def main():
     juego = juego_crear()
 
