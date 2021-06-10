@@ -6,26 +6,25 @@ ALTO_VENTANA = 300
 ALTO_TABLERO = 10
 ANCHO_TABLERO = 10
 
-filas = 10
-columnas = 10
-vacio = 0
+
+VACIO = ''
 def juego_crear():
     """Inicializar el estado del juego"""
+    juego = {}
     M = []
-    for line in range(filas):
+    for line in range(ALTO_TABLERO):
         ROW = []
-        for char in range(columnas):
-            ROW.append(vacio)
+        for char in range(ANCHO_TABLERO):
+            ROW.append(VACIO)
         M.append(ROW)
-    return M
+    juego['tablero'] = M
+    juego['turno'] = 'O'
+    return juego
+    
 
 def hay_valor_en_coordenada(juego, x, y):
-    
-     for i in range(filas):
-        for j in range(columnas):
-            if juego[i][j] !=0:
-                return True
-            return False
+    return juego['tablero'][x][y] != VACIO
+        
 
 
 def juego_actualizar(juego, x, y):
@@ -36,28 +35,15 @@ def juego_actualizar(juego, x, y):
     del tablero; en ese caso determina el nuevo estado del juego y lo
     devuelve.
     """
-    '''
-    def turnos():
-    While True:
-        if turno == jugador_x:
-            valor == 'X'
-            print('turno de jugador x')
-        elif turno == jugador_o:
-            valor == 'o'
-            print('turno de jugador y')
-        False
-    return valor
-    valor = turnos()
-    '''
-    if hay_valor_en_coordenada(juego, x, y) == False:
-        new_juego = []
-        for i in range (filas):
-            row = []
-            for j in range (columnas):
-                row.append(juego[i][j])
-            new_juego.append(row) 
-        new_juego[i][j] == 1 #el 'x' o el 'o'
-        return new_juego 
+    if x > 40 and x < 260 and y > 40 and y < 260:
+        fila = int((x - 40) / 22)
+        columna = int((y - 40) / 22)
+        if not hay_valor_en_coordenada(juego, fila, columna):
+            juego['tablero'][fila][columna] = juego['turno']
+            if juego['turno'] == 'O':
+                juego['turno'] = 'X'
+            elif juego['turno'] == 'X':
+                juego['turno'] = 'O'
     return juego
 
 
@@ -65,11 +51,16 @@ def juego_actualizar(juego, x, y):
 def juego_mostrar(juego):
     """Actualizar la ventana"""
     gamelib.draw_text('5 en línea', 150, 20)
-    gamelib.draw_rectangle(ANCHO_VENTANA - 260, ALTO_VENTANA - 260, ANCHO_VENTANA - 40, ALTO_VENTANA - 40, outline='white', width=2, fill=None)
+    gamelib.draw_rectangle(ANCHO_VENTANA - ALTO_VENTANA * 0.86, ALTO_VENTANA - ALTO_VENTANA * 0.86, ANCHO_VENTANA - ALTO_VENTANA * 0.1333, ALTO_VENTANA - ALTO_VENTANA * 0.1333, outline='white', width=2, fill=None)
     for i in range(40, 280, 22):
-        gamelib.draw_line(ANCHO_VENTANA - 260, i, ANCHO_VENTANA - 42, i, fill='white', width=1)
+        gamelib.draw_line(ANCHO_VENTANA - ALTO_VENTANA * 0.86, i, ANCHO_VENTANA - ANCHO_VENTANA * 0.14, i, fill='white')
         for j in range(40, 280, 22):
-            gamelib.draw_line(j, ALTO_VENTANA - 260, j, ALTO_VENTANA - 42)
+            gamelib.draw_line(j, ALTO_VENTANA - ALTO_VENTANA * 0.86, j, ALTO_VENTANA - ANCHO_VENTANA * 0.14)
+    for i in range(ALTO_TABLERO):
+        for j in range(ANCHO_TABLERO):
+            gamelib.draw_text(juego['tablero'][i][j], 40 + (i * 22)+ 11, 40 + (j *22) + 11)
+    gamelib.draw_text('es el turno de ' + juego['turno'], 150, 280 )
+
 def main():
     juego = juego_crear()
 
